@@ -25,7 +25,7 @@ It's in Applications > Utilities, or press **Cmd+Space** and search "Terminal".
 Copy and paste these three lines, then press Enter:
 
 ```
-git clone https://github.com/OWNER/mac-dev-setup.git
+git clone https://github.com/nooesc/mac-dev-setup.git
 cd mac-dev-setup
 ./setup.sh
 ```
