@@ -1,3 +1,7 @@
+# --- Paths (must be first so brew-installed tools are findable) ---
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$HOME/.local/bin:/usr/local/bin:$PATH"
+export PATH="/opt/homebrew/opt/node@22/bin:$PATH"
+
 # --- Zimfw Setup ---
 export ZIM_HOME=${ZIM_HOME:-${ZDOTDIR:-$HOME}/.zim}
 
@@ -18,21 +22,17 @@ source "${ZIM_HOME}/init.zsh"
 # --- Prompt ---
 eval "$(starship init zsh)"
 
-# --- Paths ---
-export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$HOME/.local/bin:/usr/local/bin:$PATH"
-export PATH="/opt/homebrew/opt/node@22/bin:$PATH"
-
 # --- Shell Behavior ---
 setopt hist_ignore_all_dups
 setopt share_history
+HISTFILE="${HOME}/.zsh_history"
 HISTSIZE=10000
 SAVEHIST=10000
-autoload -Uz compinit && compinit
 bindkey '^R' history-incremental-search-backward
 eval "$(zoxide init zsh)"
 
 # --- Modern CLI Aliases ---
-alias ls='eza -al --icons --git --group-directories-first --header --time-style=relative --color=always --color-scale'
+alias ls='eza -al --icons=always --git --group-directories-first --header --time-style=relative --color=always --color-scale-mode=gradient'
 alias cat='bat'
 alias find='fd'
 alias grep='rg'

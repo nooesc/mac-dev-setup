@@ -22,7 +22,13 @@ It's in Applications > Utilities, or press **Cmd+Space** and search "Terminal".
 
 **2. Run these commands**
 
-Copy and paste these three lines, then press Enter:
+Copy and paste these lines one at a time, pressing Enter after each:
+
+```
+xcode-select --install
+```
+
+A pop-up will appear — click "Install" and wait for it to finish. Then run:
 
 ```
 git clone https://github.com/nooesc/mac-dev-setup.git
