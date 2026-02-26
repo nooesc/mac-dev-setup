@@ -8,6 +8,7 @@ The setup script installs and configures everything you need:
 
 - **WezTerm** -- a modern terminal app (replaces the built-in Terminal)
 - **JetBrainsMono Nerd Font** -- makes icons show up nicely in your terminal
+- **GitHub CLI** -- create pull requests, manage issues, and more from your terminal
 - **Modern CLI tools** -- eza, bat, fd, ripgrep, zoxide, fzf (faster, friendlier replacements for everyday commands)
 - **Starship** -- a clean, informative prompt that tells you where you are at a glance
 - **Node.js** -- the JavaScript runtime that Claude Code needs
@@ -197,7 +198,7 @@ A Pull Request is how you propose merging your branch into `main` on GitHub. It 
 
 Once the PR is approved, click **"Merge pull request"** on GitHub to merge it into `main`.
 
-> **Tip:** Install the GitHub CLI (`brew install gh`) to create PRs from the terminal: `gh pr create --title "Add contact form"`
+> **Tip:** Your setup includes the GitHub CLI (`gh`). After logging in with `gh auth login`, you can create PRs from the terminal: `gh pr create --title "Add contact form"`
 
 ### Quick reference
 
@@ -212,7 +213,7 @@ Once the PR is approved, click **"Merge pull request"** on GitHub to merge it in
 | `git checkout -b <name>` | Create and switch to a new branch |
 | `git checkout main` | Switch back to main |
 | `git log --oneline` | View recent commits |
-| `gh pr create` | Open a Pull Request from the terminal (requires `brew install gh`) |
+| `gh pr create` | Open a Pull Request from the terminal |
 
 ## Reference
 

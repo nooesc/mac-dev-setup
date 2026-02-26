@@ -212,11 +212,30 @@ if [[ -z "$CURRENT_EMAIL" ]]; then
 fi
 
 # ============================================================================
-# 6. Modern CLI Tools
+# 6. GitHub CLI
+# ============================================================================
+
+step "GitHub CLI" \
+  "The GitHub CLI lets you create pull requests, manage issues, and more — right from your terminal."
+
+if command -v gh &>/dev/null; then
+  success "GitHub CLI is already installed."
+else
+  info "Installing GitHub CLI..."
+  brew install gh
+  success "GitHub CLI installed!"
+fi
+
+info "You can log in later by running: gh auth login"
+
+pause
+
+# ============================================================================
+# 7. Modern CLI Tools
 # ============================================================================
 
 step "Modern CLI Tools" \
-  "These replace old Unix commands with faster, friendlier versions with color and icons."
+  "These replace everyday commands with faster, friendlier versions with color and icons."
 
 CLI_TOOLS=(eza bat fd ripgrep zoxide fzf)
 NEED_INSTALL=()
@@ -244,7 +263,7 @@ else
 fi
 
 # ============================================================================
-# 7. Starship Prompt
+# 8. Starship Prompt
 # ============================================================================
 
 step "Starship Prompt" \
@@ -261,7 +280,7 @@ fi
 pause
 
 # ============================================================================
-# 8. Node.js 22
+# 9. Node.js 22
 # ============================================================================
 
 step "Node.js 22" \
@@ -289,7 +308,7 @@ else
 fi
 
 # ============================================================================
-# 9. Claude Code
+# 10. Claude Code
 # ============================================================================
 
 step "Claude Code" \
@@ -308,7 +327,7 @@ fi
 pause
 
 # ============================================================================
-# 10. Config Files
+# 11. Config Files
 # ============================================================================
 
 step "Configuration Files" \
@@ -339,7 +358,7 @@ install_config "$SCRIPT_DIR/configs/starship.toml"  "$HOME/.config/starship.toml
 install_config "$SCRIPT_DIR/configs/wezterm.lua"    "$HOME/.config/wezterm/wezterm.lua" "wezterm.lua (terminal config)"
 
 # ============================================================================
-# 11. Initialize Zim (Plugin Manager)
+# 12. Initialize Zim (Plugin Manager)
 # ============================================================================
 
 step "Zim Plugin Manager" \
@@ -379,6 +398,7 @@ echo "│     • Homebrew (package manager)                     │"
 echo "│     • WezTerm (terminal app)                         │"
 echo "│     • JetBrainsMono Nerd Font                        │"
 echo "│     • Git (configured)                               │"
+echo "│     • GitHub CLI (gh)                               │"
 echo "│     • Modern CLI tools                               │"
 echo "│       (eza, bat, fd, rg, zoxide, fzf)                │"
 echo "│     • Starship (prompt theme)                        │"
