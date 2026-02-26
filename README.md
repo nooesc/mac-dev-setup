@@ -215,6 +215,85 @@ Once the PR is approved, click **"Merge pull request"** on GitHub to merge it in
 | `git log --oneline` | View recent commits |
 | `gh pr create` | Open a Pull Request from the terminal |
 
+## Claude Code: Slash Commands and Skills
+
+Claude Code has built-in commands you can type during a conversation. They all start with `/`.
+
+### Built-in slash commands
+
+These are available out of the box:
+
+| Command | What it does |
+|---|---|
+| `/help` | See all available commands |
+| `/clear` | Reset the conversation (start fresh) |
+| `/compact` | Summarize the conversation to free up context space |
+| `/model` | Switch to a different AI model |
+| `/memory` | Edit your project's `CLAUDE.md` file (Claude's long-term memory) |
+| `/init` | Create a `CLAUDE.md` file for your project |
+| `/cost` | Show how many tokens you've used |
+| `/exit` | Quit Claude Code |
+
+> **Tip:** Type `/` and press **Tab** to see all available commands.
+
+### Skills (custom slash commands)
+
+Skills are custom commands you create as simple markdown files. They teach Claude reusable workflows — like how to review code, run deployments, or follow your team's conventions.
+
+**Where skills live:**
+
+| Location | Path | Applies to |
+|---|---|---|
+| Personal | `~/.claude/skills/<name>/SKILL.md` | All your projects |
+| Project | `.claude/skills/<name>/SKILL.md` | That project only |
+
+**Creating a skill:**
+
+```
+mkdir -p ~/.claude/skills/explain-code
+```
+
+Then create `SKILL.md` inside that folder:
+
+```markdown
+---
+name: explain-code
+description: Explains code with diagrams and analogies
+---
+
+When explaining code:
+1. Start with an everyday analogy
+2. Draw an ASCII diagram of the flow
+3. Walk through the code step by step
+4. Highlight a common mistake or gotcha
+```
+
+Now you can type `/explain-code` in any Claude Code session and it will follow those instructions.
+
+**Key things to know:**
+- The `name` in the frontmatter becomes the `/command` name
+- The `description` helps Claude decide when to use the skill automatically
+- Skills can accept arguments — e.g. `/deploy production`
+- Skills are just text files in version control, so they're easy to share with your team
+
+### What about MCP servers?
+
+You may see references to **MCP (Model Context Protocol)** servers. These connect Claude to external tools and APIs — things like GitHub, databases, or monitoring services.
+
+**Prefer skills over MCP when you can.** Here's why:
+
+| | Skills | MCP Servers |
+|---|---|---|
+| **What they are** | Markdown files with instructions | External services Claude connects to |
+| **Good for** | Workflows, conventions, templates | Accessing APIs, databases, external data |
+| **Setup** | Drop a `.md` file in a folder | Install and configure a running server |
+| **Complexity** | Simple — just text | More moving parts, can break |
+| **Sharing** | Commit to your repo | Requires server setup per machine |
+
+**When to use MCP:** When you need Claude to *access something external* — like querying a database, calling a third-party API, or fetching live data it couldn't otherwise reach.
+
+**When to use skills instead:** When you want Claude to *follow a process* — like your code review checklist, commit message format, or deployment steps. If the task can be described in plain English instructions, a skill is simpler and more reliable.
+
 ## Reference
 
 See the [cheatsheet](docs/CHEATSHEET.md) for keyboard shortcuts, common commands, and troubleshooting.
