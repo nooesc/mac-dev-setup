@@ -115,105 +115,39 @@ zoxide works behind the scenes. You don't need to configure anything — just us
 
 ## Git Basics
 
-Git tracks every change you make to your code. Think of it as an unlimited undo history that also lets you collaborate with others and sync your work to the cloud (GitHub).
+Git tracks every change you make to your code. Think of it as an unlimited undo history that also lets you sync your work to GitHub.
+
+**The good news: you don't need to memorize Git commands.** You can just tell Claude Code what you want in plain English:
+
+- *"commit my changes"*
+- *"push to GitHub"*
+- *"create a new branch called my-feature"*
+- *"make a pull request"*
+
+Claude will run the right Git commands for you and explain what it's doing.
 
 ### Key concepts
 
-- **Repository (repo)** — a project folder that Git is tracking. It contains your files plus a hidden `.git` folder with the full history.
-- **Commit** — a snapshot of your changes, like a save point. Each commit has a short message describing what changed.
-- **Branch** — a separate line of work. The default branch is called `main`. You create new branches to work on features without affecting `main`.
-- **Remote** — the copy of your repo on GitHub (or another server). Your local repo and the remote stay in sync via `push` and `pull`.
+These are worth understanding even if Claude handles the commands:
 
-### Getting a repo
+- **Commit** — a save point. A snapshot of your changes with a short description of what changed.
+- **Branch** — a separate line of work. You create branches to build features without affecting the main code. The default branch is called `main`.
+- **Push / Pull** — push uploads your commits to GitHub; pull downloads the latest changes from GitHub.
+- **Pull Request (PR)** — a proposal to merge your branch into `main`. It lets others review your changes before they go live.
 
-```
-# Clone (download) an existing repo from GitHub
-git clone https://github.com/username/project-name.git
-cd project-name
-
-# Or start tracking a new project
-mkdir my-project
-cd my-project
-git init
-```
-
-### The everyday workflow: edit, commit, push
-
-This is what you'll do 90% of the time:
-
-```
-# 1. Check what's changed
-git status
-
-# 2. Stage the files you want to commit
-git add .                    # stage everything, or
-git add index.html style.css # stage specific files
-
-# 3. Commit with a short message
-git commit -m "Add homepage layout"
-
-# 4. Push your commits to GitHub
-git push
-```
-
-**What each step does:**
-
-| Step | Command | What's happening |
-|---|---|---|
-| Check | `git status` | See which files are new, modified, or staged |
-| Stage | `git add <files>` | Tell Git which changes to include in the next commit |
-| Commit | `git commit -m "message"` | Save a snapshot with a description |
-| Push | `git push` | Upload your commits to GitHub |
-| Pull | `git pull` | Download the latest changes from GitHub |
-
-### Branches
-
-Branches let you work on a feature without touching the main code. When you're done, you merge it back.
-
-```
-# Create a new branch and switch to it
-git checkout -b my-feature
-
-# ... make changes, commit as usual ...
-git add .
-git commit -m "Build contact form"
-
-# Push the branch to GitHub
-git push -u origin my-feature
-
-# Switch back to main when you're done
-git checkout main
-```
-
-### Pull Requests (PRs)
-
-A Pull Request is how you propose merging your branch into `main` on GitHub. It lets others review your changes before they go live.
-
-**On GitHub:**
-
-1. Push your branch (`git push -u origin my-feature`)
-2. Go to your repo on github.com
-3. Click the **"Compare & pull request"** button that appears
-4. Add a title and description, then click **"Create pull request"**
-
-Once the PR is approved, click **"Merge pull request"** on GitHub to merge it into `main`.
-
-> **Tip:** Your setup includes the GitHub CLI (`gh`). After logging in with `gh auth login`, you can create PRs from the terminal: `gh pr create --title "Add contact form"`
-
-### Quick reference
+### If you want to run commands yourself
 
 | Command | What it does |
 |---|---|
-| `git clone <url>` | Download a repo from GitHub |
 | `git status` | See what's changed |
-| `git add .` | Stage all changes |
-| `git commit -m "msg"` | Save a snapshot |
+| `git add .` | Stage all changes for commit |
+| `git commit -m "message"` | Save a snapshot |
 | `git push` | Upload to GitHub |
 | `git pull` | Download latest from GitHub |
 | `git checkout -b <name>` | Create and switch to a new branch |
-| `git checkout main` | Switch back to main |
-| `git log --oneline` | View recent commits |
 | `gh pr create` | Open a Pull Request from the terminal |
+
+> **Tip:** Your setup includes the GitHub CLI (`gh`). Log in with `gh auth login` to create PRs and manage issues from the terminal.
 
 ## Claude Code: Slash Commands and Skills
 
