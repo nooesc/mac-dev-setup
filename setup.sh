@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# Friendly error message on unexpected failures
+trap 'echo ""; printf "\033[0;31m✗ Something went wrong. Please re-run the script — it will pick up where it left off.\033[0m\n"; exit 1' ERR
+
 # ============================================================================
 # Mac Dev Setup — Guided Installer
 # A friendly, step-by-step setup for new Mac users who want to use Claude Code.
@@ -20,7 +23,7 @@ success() {
 }
 
 warn() {
-  printf '\033[0;33m⚠ %s\033[0m\n' "$1"
+  printf '\033[1;33m⚠ %s\033[0m\n' "$1"
 }
 
 error() {
@@ -83,9 +86,15 @@ else
   info "(If the pop-up didn't appear, they may already be installing.)"
   echo ""
 
-  # Wait until xcode-select -p succeeds
+  # Wait until xcode-select -p succeeds (timeout after 10 minutes)
+  WAIT_COUNT=0
   until xcode-select -p &>/dev/null; do
     sleep 5
+    WAIT_COUNT=$((WAIT_COUNT + 1))
+    if [[ $WAIT_COUNT -ge 120 ]]; then
+      error "Xcode CLI Tools installation timed out. Please install manually and re-run this script."
+      exit 1
+    fi
   done
 
   success "Xcode Command Line Tools installed!"
@@ -288,6 +297,8 @@ step "Claude Code" \
 
 if command -v claude &>/dev/null; then
   success "Claude Code is already installed."
+elif ! command -v npm &>/dev/null; then
+  warn "npm is not available yet. Claude Code will be installed when you open WezTerm and run: npm install -g @anthropic-ai/claude-code"
 else
   info "Installing Claude Code..."
   npm install -g @anthropic-ai/claude-code
@@ -345,8 +356,11 @@ if [[ ! -e "${ZIM_HOME}/zimfw.zsh" ]]; then
 fi
 
 info "Installing Zim plugins (this may take a moment)..."
-zsh -c "source ${ZIM_HOME}/zimfw.zsh install" 2>/dev/null || true
-success "Zim plugins installed!"
+if zsh -c "source ${ZIM_HOME}/zimfw.zsh install" 2>&1; then
+  success "Zim plugins installed!"
+else
+  warn "Zim plugin installation had issues. They will be installed automatically when you open WezTerm."
+fi
 
 pause
 
