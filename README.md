@@ -214,19 +214,22 @@ Now you can type `/explain-code` in any Claude Code session and it will follow t
 
 You may see references to **MCP (Model Context Protocol)** servers. These connect Claude to external tools and APIs — things like GitHub, databases, or monitoring services.
 
-**Prefer skills over MCP when you can.** Here's why:
+**Prefer skills + CLI tools over MCP when you can.** Here's why:
 
-| | Skills | MCP Servers |
+| | Skills + CLI tools | MCP Servers |
 |---|---|---|
-| **What they are** | Markdown files with instructions | External services Claude connects to |
-| **Good for** | Workflows, conventions, templates | Accessing APIs, databases, external data |
+| **What they are** | Markdown instructions + tools already on your Mac | External services Claude connects to |
+| **Good for** | Workflows, conventions, anything a CLI can do | Accessing APIs or data Claude can't reach otherwise |
 | **Setup** | Drop a `.md` file in a folder | Install and configure a running server |
 | **Complexity** | Simple — just text | More moving parts, can break |
+| **Context usage** | Minimal — only loads what's needed | **Bloats context** — MCP tool definitions eat into Claude's memory every message |
 | **Sharing** | Commit to your repo | Requires server setup per machine |
 
-**When to use MCP:** When you need Claude to *access something external* — like querying a database, calling a third-party API, or fetching live data it couldn't otherwise reach.
+The context bloat problem is the big one. Every MCP server registers its tools into Claude's context window, taking up space that could be used for your actual conversation. The more MCP servers you connect, the less room Claude has to think about your code. A skill that tells Claude to run `gh pr list` uses almost no context, while a GitHub MCP server loads dozens of tool definitions into every single message.
 
-**When to use skills instead:** When you want Claude to *follow a process* — like your code review checklist, commit message format, or deployment steps. If the task can be described in plain English instructions, a skill is simpler and more reliable.
+**When to use MCP:** When you truly need Claude to access something it can't reach through a CLI tool — like a proprietary API with no command-line client, or a live database connection.
+
+**When to use skills + CLI tools instead:** Almost everything else. Claude can already run shell commands, so a skill that says "use `gh` for GitHub operations" or "use `curl` to hit this API" is lighter, simpler, and leaves more context for your actual work.
 
 ## Reference
 
